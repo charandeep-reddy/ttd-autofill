@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "TTD Autofill",
+  "version": "2.0.1",
+  "description": "Fills pilgrim details on the TTD booking forms. Never touches payment.",
+  "permissions": [
+    "storage",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "TTD Autofill"
+  },
+  "commands": {
+    "autofill": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Run All: autofill the open TTD form, then press Continue (never Pay)"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://ttdevasthanams.ap.gov.in/*"
+      ],
+      "js": [
+        "bridge.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://ttdevasthanams.ap.gov.in/*"
+      ],
+      "js": [
+        "content.js",
+        "overlay.js"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://ttdevasthanams.ap.gov.in/*"
+  ]
+}
